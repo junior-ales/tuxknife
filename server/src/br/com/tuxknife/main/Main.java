@@ -1,51 +1,44 @@
 package br.com.tuxknife.main;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.regex.Pattern;
+import java.io.InputStream;
 
-/**
- * Created with IntelliJ IDEA.
- * User: jsantos
- * Date: May/23/13
- * Time: 22:14
- * To change this template use File | Settings | File Templates.
- */
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
         Server server = new Server(8083);
-
         server.setHandler( new MainHandler() );
-
         server.start();
         server.join();
-
     }
 
     private static class MainHandler extends AbstractHandler {
 
-
-        public static final String REGEX_SERVER = "^\\/servers\\/(.*)$";
+        public static final String REGEX_SERVER = "^/servers/(.*)$";
+        public static final int TIMEOUT_IN_SECONDS = 5000;
 
         @Override
-        public void handle(String s, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        public void handle(String url, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
             StringBuilder result = new StringBuilder();
 
-            if ( s.matches(REGEX_SERVER)  ) {
+            if (url.matches(REGEX_SERVER)) {
 
-                System.out.println("Request to server");
+                String server = url.replaceAll(REGEX_SERVER, "$1");
+                System.out.println("Request to server " + server);
 
-                String server = "localhost";
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
 
@@ -54,17 +47,72 @@ public class Main {
                 response.setContentType("application/json;charset=utf-8");
                 baseRequest.setHandled(true);
 
+                String commandResponse;
+                try {
+                    commandResponse = executeCommand(server, username, password, "ls -ls");
+                } catch (JSchException e) {
+                    commandResponse = "Err: " + e.getMessage();
+                }
+
                 result.append("{")
                         .append("\"host\": \"").append(server).append("\", ")
                         .append("\"username\":\"").append(username).append("\", ")
-                        .append("\"password\":\"").append(password).append("\"")
+                        .append("\"password\":\"").append(password).append("\",")
+                        .append("\"commandResponse\":\"").append(commandResponse).append("\"")
                         .append("}");
                 System.out.println(result);
-
             }
-
             response.getWriter().print(result);
+        }
 
+        private String executeCommand(String server, String username, String password, String command) throws JSchException, IOException {
+
+            JSch jSch = new JSch();
+
+            Session session = jSch.getSession(username, server);
+
+            session.setPassword(password);
+            session.setConfig("StrictHostKeyChecking", "no");
+
+            session.connect(TIMEOUT_IN_SECONDS);
+
+            Channel channel=  session.openChannel("exec");
+            ((ChannelExec)channel).setCommand(command);
+
+            // X Forwarding
+            // channel.setXForwarding(true);
+
+            //channel.setInputStream(System.in);
+            channel.setInputStream(null);
+
+            //channel.setOutputStream(System.out);
+
+            //FileOutputStream fos=new FileOutputStream("/tmp/stderr");
+            //((ChannelExec)channel).setErrStream(fos);
+            ((ChannelExec)channel).setErrStream(System.err);
+
+            InputStream in=channel.getInputStream();
+
+            channel.connect();
+
+            StringBuilder result = new StringBuilder();
+
+            byte[] tmp=new byte[1024];
+            while(true){
+                while(in.available()>0){
+                    int i=in.read(tmp, 0, 1024);
+                    if(i<0)break;
+                    result.append(new String(tmp, 0, i));
+                }
+                if(channel.isClosed()){
+                    System.out.println("exit-status: "+channel.getExitStatus());
+                    break;
+                }
+            }
+            channel.disconnect();
+            session.disconnect();
+
+            return result.toString().replaceAll("\\n","");
         }
     }
 }
