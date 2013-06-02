@@ -1,5 +1,6 @@
 var renderResponse = function(data) {
-  $('#response').append(JSON.stringify(data));
+  var response = $('<p>' + JSON.stringify(data) + '</p>');
+  $('#response').prepend(response);
 }
 
 $('document').ready(function() {
@@ -7,14 +8,14 @@ $('document').ready(function() {
     var user = $('#username').val();
     var pass = $('#password').val();
     var server = $('#server').val();
-    var webservice = '10.71.2.89';
+    var webservice = 'localhost';
 
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: 'http://' + webservice + ':8083/servers/' + server,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
-      error: function(data) { alert("faio"); console.log(data) },
+      error: function(data) { alert("FAIL! Open a JS console to see the response"); console.log(data) },
       dataType: "json"
     });
   });

@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>TuxKife</title>
+    <title>TuxKnife</title>
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/custom.modernizr.js"></script>
@@ -14,11 +14,11 @@
   <body>
     <div class="row">
       <div class="large-12 columns">
-        <h1>TuxKife</h1>
+        <h1>TuxKnife</h1>
       </div>
     </div>
     <div class="row">
-      <div class="large-12 columns">
+      <div class="large-6 columns">
         <form>
           <label for='username'>Username</label>
           <input type='text' id='username' name='username' autofocus required />
@@ -29,9 +29,11 @@
           <label for='server'>Server</label>
           <input type='text' id='server' name='server' required />
 
-          <input type='button' id='submitButton' value="Submit" />
+          <input type='button' id='submitButton' class="button small-12" value="Submit" />
         </form>
-        <div id='response'></div>
+        <div class="row">
+          <div id='response' class='small-12 columns'></div>
+        </div>
       </div>
     </div>
     <script>
