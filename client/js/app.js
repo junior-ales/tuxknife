@@ -19,4 +19,8 @@ $('document').ready(function() {
       dataType: "json"
     });
   });
+
+  $('#clearLog').on('click', function() {
+    $('#response').empty();
+  });
 });
