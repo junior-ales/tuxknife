@@ -1,9 +1,18 @@
+var addSettings = function(data) {
+  data.visibility = data.commandError ? 'display:block' : 'display:none'; 
+}
+
 var renderResponse = function(data) {
+  addSettings(data);
+  var directive = { '.@style':'visibility', 'label':'commandError' }
+  $('#errorMsg').render(data, directive);
+
   var response = $('<p>' + JSON.stringify(data) + '</p>');
   $('#response').prepend(response);
 }
 
 $('document').ready(function() {
+  $('#errorMsg').hide();
   $('#submitButton').on('click', function() {
     var user = $('#username').val();
     var pass = $('#password').val();

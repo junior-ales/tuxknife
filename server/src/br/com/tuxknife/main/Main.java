@@ -47,17 +47,19 @@ public class Main {
                 response.setContentType("application/json;charset=utf-8");
                 baseRequest.setHandled(true);
 
-                String commandResponse;
+                String commandResponse = "";
+                String commandError = "";
                 try {
                     commandResponse = executeCommand(server, username, password, "ls -ls");
                 } catch (JSchException e) {
-                    commandResponse = "Err: " + e.getMessage();
+                    commandError = "Err: " + e.getMessage();
                 }
 
                 result.append("{")
                         .append("\"host\": \"").append(server).append("\", ")
                         .append("\"username\":\"").append(username).append("\", ")
                         .append("\"password\":\"").append(password).append("\",")
+                        .append("\"commandError\":\"").append(commandError).append("\",")
                         .append("\"commandResponse\":\"").append(commandResponse).append("\"")
                         .append("}");
                 System.out.println(result);
