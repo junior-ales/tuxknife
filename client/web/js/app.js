@@ -11,20 +11,26 @@ var renderResponse = function(data) {
   $('#response').prepend(response);
 }
 
+var POSTFailure = function(data) {
+  console.log(data);
+  data.commandError = data.statusText;
+  renderResponse(data);
+}
+
 $('document').ready(function() {
   $('#errorMsg').hide();
   $('#submitButton').on('click', function() {
     var user = $('#username').val();
     var pass = $('#password').val();
     var server = $('#server').val();
-    var webservice = 'localhost';
+    var webservice = $('#webservice').val() ? $('#webservice').val() : 'localhost';
 
     $.ajax({
       type: "POST",
       url: 'http://' + webservice + ':8083/servers/' + server,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
-      error: function(data) { alert("FAIL! Open a JS console to see the response"); console.log(data) },
+      error: function(data) { POSTFailure(data) },
       dataType: "json"
     });
   });
