@@ -85,6 +85,10 @@ public class Main {
         channel.disconnect();
         session.disconnect();
 
+        return normalizeReturn(buffer);
+    }
+
+    private static String normalizeReturn(StringBuilder buffer) {
         return buffer.toString().replaceAll("\\n","");
     }
 
