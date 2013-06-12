@@ -67,6 +67,7 @@ public class Main {
         }
 
     }
+    
     private static String executeCommand(String server, String username, String password, String command) throws JSchException, IOException {
         Session session = getSession(server, username, password);
         Channel channel = getChannel(command, session);
