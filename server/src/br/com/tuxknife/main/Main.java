@@ -18,8 +18,9 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 
 public class Main {
 
-    public static final int TIMEOUT_IN_SECONDS = 5000;
-    public static final int PORT = 8083;
+    private static final int TIMEOUT_IN_MILLISECONDS = 5000;
+    private static final int PORT = 8083;
+    private static final JSch JSCH = new JSch();
 
     public static void main(String[] args) throws Exception {
         Server server = new Server(PORT);
@@ -93,10 +94,10 @@ public class Main {
     }
 
     private static Session getSession(String server, String username, String password) throws JSchException {
-        Session session = new JSch().getSession(username, server);
+        Session session = JSCH.getSession(username, server);
         session.setPassword(password);
         session.setConfig("StrictHostKeyChecking", "no");
-        session.connect(TIMEOUT_IN_SECONDS);
+        session.connect(TIMEOUT_IN_MILLISECONDS);
         return session;
     }
 
