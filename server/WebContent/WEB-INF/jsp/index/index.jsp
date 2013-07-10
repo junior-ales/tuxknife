@@ -6,5 +6,9 @@
     </head>
     <body>
         <p>Index</p>
+        <form action="/voutemostrar/meusolhos" method="POST">
+            <input type="text" />
+            <input type="submit" value="ok" />
+        </form>
     </body>
 </html>

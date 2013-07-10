@@ -25,20 +25,21 @@ public class IndexController {
 
 	public IndexController(Result result) {
 		this.result = result;
-	}
+        this.result.use(Results.status()).header("Access-Control-Allow-Origin", "*");
+    }
 
     @Get
 	@Path("/")
 	public void index() {
+        result.nothing();
 	}
 
     @Post
-	@Path("/servers")
-	public void form(String username, String password) throws IOException {
+	@Path("/servers/{server}")
+	public void login(String username, String password, String server) throws IOException {
         String commandResponse = "";
         String commandError = "";
         try {
-            String server = "localhost";
             commandResponse = executeCommand(server, username, password, "ls -l");
         } catch (JSchException e) {
             commandError = "Err: " + e.getMessage();
@@ -46,8 +47,7 @@ public class IndexController {
 
         CommandResponse response = new CommandResponse(commandResponse, commandError);
 
-        result.use(Results.status()).header("Access-Control-Allow-Origin", "*");
-		result.use(Results.json()).from(response).serialize();
+		result.use(Results.json()).withoutRoot().from(response).serialize();
 	}
 
     private String executeCommand(String server, String username, String password, String command) throws JSchException, IOException {

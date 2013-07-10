@@ -1,10 +1,10 @@
 var addSettings = function(data) {
-  data.visibility = data.commandError ? 'display:block' : 'display:none'; 
+  data.visibility = data.error ? 'display:block' : 'display:none'; 
 }
 
 var renderResponse = function(data) {
   addSettings(data);
-  var directive = { '.@style':'visibility', 'label':'commandError' }
+  var directive = { '.@style':'visibility', 'label':'error' }
   $('#errorMsg').render(data, directive);
 
   var response = $('<p>' + JSON.stringify(data) + '</p>');
@@ -13,7 +13,7 @@ var renderResponse = function(data) {
 
 var POSTFailure = function(data) {
   console.log(data);
-  data.commandError = data.statusText;
+  data.error = data.statusText;
   renderResponse(data);
 }
 
@@ -27,8 +27,7 @@ $('document').ready(function() {
 
     $.ajax({
       type: "POST",
-//      url: 'http://' + webservice + ':8080/servers' + server,
-      url: 'http://' + webservice + ':8080/servers',
+      url: 'http://' + webservice + ':8080/servers/' + server,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { POSTFailure(data) },
