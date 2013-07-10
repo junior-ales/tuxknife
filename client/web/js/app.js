@@ -22,12 +22,13 @@ $('document').ready(function() {
   $('#submitButton').on('click', function() {
     var user = $('#username').val();
     var pass = $('#password').val();
-    var server = $('#server').val();
+    var server = $('#server').val() ? $('#server').val() : 'localhost';
     var webservice = $('#webservice').val() ? $('#webservice').val() : 'localhost';
 
     $.ajax({
       type: "POST",
-      url: 'http://' + webservice + ':8083/servers/' + server,
+//      url: 'http://' + webservice + ':8080/servers' + server,
+      url: 'http://' + webservice + ':8080/servers',
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { POSTFailure(data) },
