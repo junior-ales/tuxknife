@@ -22,9 +22,11 @@ public class IndexController {
     private static final int TIMEOUT_IN_MILLISECONDS = 5000;
     private static final JSch JSCH = new JSch();
     private final Result result;
+    private LoggedUser loggedUser;
 
-	public IndexController(Result result) {
+    public IndexController(Result result, LoggedUser loggedUser) {
 		this.result = result;
+        this.loggedUser = loggedUser;
         this.result.use(Results.status()).header("Access-Control-Allow-Origin", "*");
     }
 
@@ -35,20 +37,29 @@ public class IndexController {
 	}
 
     @Post
-	@Path("/servers/{server}")
-	public void login(String username, String password, String server) throws IOException {
-        String commandResponse = "";
-        String commandError = "";
+    @Path("/servers/{server}")
+    public void login(String username, String password, String server) throws IOException {
+        if (loggedUser.isLogged()) result.redirectTo(this).commandPage();
+
+        String response = "";
+        String error = "";
         try {
-            commandResponse = executeCommand(server, username, password, "ls -l");
+            response = executeCommand(server, username, password, "ls -l");
+//            loggedUser.setSshSession(getSession(server, username, password));
+//            response = "OK";
         } catch (JSchException e) {
-            commandError = "Err: " + e.getMessage();
+            error = "Err: " + e.getMessage();
         }
+        CommandResponse responseJSON = new CommandResponse(response, error);
 
-        CommandResponse response = new CommandResponse(commandResponse, commandError);
+        result.use(Results.json()).withoutRoot().from(responseJSON).serialize();
+    }
 
-		result.use(Results.json()).withoutRoot().from(response).serialize();
-	}
+    @Get
+    @Path("/commandpage")
+    public void commandPage() {
+        result.use(Results.json()).withoutRoot().from("commandpage").serialize();
+    }
 
     private String executeCommand(String server, String username, String password, String command) throws JSchException, IOException {
         Session session = getSession(server, username, password);
