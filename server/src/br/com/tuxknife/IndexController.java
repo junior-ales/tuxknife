@@ -44,7 +44,8 @@ public class IndexController {
         String response = "";
         String error = "";
         try {
-            response = executeCommand(server, username, password, "ls -l");
+            executeCommand(server, username, password, "ls -l");
+            response = "test";
 //            loggedUser.setSshSession(getSession(server, username, password));
 //            response = "OK";
         } catch (JSchException e) {

@@ -1,16 +1,16 @@
 package br.com.tuxknife;
 
 public class CommandResponse {
-    private String response;
+    private String resource;
     private String error;
 
-    public CommandResponse(String response, String error) {
-        this.response = response;
+    public CommandResponse(String resource, String error) {
+        this.resource = resource;
         this.error = error;
     }
 
-    public String getResponse() {
-        return response;
+    public String getResource() {
+        return resource;
     }
 
     public String getError() {
