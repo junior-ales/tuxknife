@@ -22,14 +22,17 @@ var POSTFailure = function(data) {
   renderResponse(data);
 }
 
-var loadResource = function(name) {
-  if (currentResource == name) return;
-  $('#content').load(name + '.html', function() {
-    $.getScript('js/' + name + '.js')
-    .done(function() {
-      currentResource = name;
-      console.log(name);
-    });
+var loadResource = function(resourceName) {
+  if (currentResource == resourceName) return;
+  $('#content').load(resourceName + '.html', function() {
+    loadScript(resourceName);
+  });
+}
+
+var loadScript = function(scriptName) {
+  $.getScript('js/' + scriptName + '.js').done(function() {
+    currentResource = scriptName;
+    console.log(scriptName);
   });
 }
 
