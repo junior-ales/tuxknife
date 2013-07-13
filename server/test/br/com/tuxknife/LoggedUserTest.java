@@ -1,5 +1,7 @@
 package br.com.tuxknife;
 
+import javax.servlet.http.HttpSession;
+
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import org.junit.Before;
@@ -17,7 +19,7 @@ public class LoggedUserTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new LoggedUser();
+        user = new LoggedUser(mock(HttpSession.class));
         sshSession = mock(Session.class);
     }
 
