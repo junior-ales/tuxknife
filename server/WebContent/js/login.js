@@ -11,13 +11,12 @@ $('document').ready(function() {
       type: "POST",
       url: 'http://' + webservice + ':8080/api/servers/' + server,
       data: { "username": user, "password": pass },
-      success: function(data) { renderResponse(data) },
+      success: function(data) { 
+        renderResponse(data); 
+        renderView(data.responseData);
+      },
       error: function(data) { POSTFailure(data) },
       dataType: "json"
     });
-  });
-
-  $('#clearLog').on('click', function() {
-    $('#response').empty();
   });
 });

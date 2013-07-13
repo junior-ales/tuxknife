@@ -6,8 +6,6 @@ var renderError = function(data) {
 
 var renderRouting = function(data) {
   data.resource = data.resource ? data.resource : 'login';
-  var response = $('<p>' + JSON.stringify(data) + '</p>');
-  $('#response').prepend(response);
   loadResource(data.resource);
 }
 
