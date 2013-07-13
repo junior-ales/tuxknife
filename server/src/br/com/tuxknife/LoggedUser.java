@@ -1,5 +1,7 @@
 package br.com.tuxknife;
 
+import javax.annotation.PreDestroy;
+
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.SessionScoped;
 import com.jcraft.jsch.Session;
@@ -22,6 +24,7 @@ public class LoggedUser {
         return sshSession == null;
     }
 
+    @PreDestroy
     public void closeSession() {
         if (!isLoggedOut()) {
             sshSession.disconnect();

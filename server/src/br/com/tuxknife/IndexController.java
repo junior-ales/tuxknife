@@ -72,10 +72,12 @@ public class IndexController {
     }
 
     @Get
-    @Path("/logout")
+    @Path("/signout")
     public void closeSession() {
         loggedUser.closeSession();
-        result.use(json()).withoutRoot().from(new CommandResponse().withResource("logout")).serialize();
+        CommandResponse response = new CommandResponse().withResource("login");
+        response.addResponseData("userMessage", "Signed out successfully");
+        result.use(json()).withoutRoot().from(response).include("responseData").serialize();
     }
 
     private String executeCommand(Session session, String command) throws JSchException, IOException {

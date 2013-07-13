@@ -4,4 +4,9 @@ $('document').ready(function() {
       renderResponse(data);
     });
   });
+  $('#signOutButton').on('click', function() {
+    $.get('http://' + tuxknifeWebService + ':8080/signout').done(function(data) {
+      renderResponse(data);
+    });
+  });
 })
