@@ -9,7 +9,7 @@ $('document').ready(function() {
 
     $.ajax({
       type: "POST",
-      url: 'http://' + webservice + ':8080/servers/' + server,
+      url: 'http://' + webservice + ':8080/api/servers/' + server,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { POSTFailure(data) },

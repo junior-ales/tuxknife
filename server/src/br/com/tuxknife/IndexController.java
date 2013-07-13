@@ -19,6 +19,7 @@ import static br.com.caelum.vraptor.view.Results.json;
 import static br.com.caelum.vraptor.view.Results.status;
 
 @Resource
+@Path("/api")
 public class IndexController {
 
     private static final int TIMEOUT_IN_MILLISECONDS = 5000;
