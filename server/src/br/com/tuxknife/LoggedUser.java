@@ -1,13 +1,11 @@
 package br.com.tuxknife;
 
-import javax.annotation.PreDestroy;
-
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.SessionScoped;
 import com.jcraft.jsch.Session;
 
-@SessionScoped
 @Component
+@SessionScoped
 public class LoggedUser {
 
     private Session sshSession;
@@ -20,12 +18,14 @@ public class LoggedUser {
         this.sshSession = sshSession;
     }
 
-    public boolean isLogged() {
-        return sshSession != null;
+    public boolean isLoggedOut() {
+        return sshSession == null;
     }
 
-    @PreDestroy
     public void closeSession() {
-        sshSession.disconnect();
+        if (!isLoggedOut()) {
+            sshSession.disconnect();
+            System.out.println("Session closed");
+        }
     }
 }

@@ -1,6 +1,6 @@
 var renderError = function(data) {
-  data.visibility = data.error ? 'display:block' : 'display:none'; 
-  var directive = { '.@style':'visibility', 'label':'error' }
+  data.visibility = data.responseError ? 'display:block' : 'display:none'; 
+  var directive = { '.@style':'visibility', 'label':'responseError' }
   $('#errorMsg').render(data, directive);
 }
 
@@ -18,25 +18,26 @@ var renderResponse = function(data) {
 
 var POSTFailure = function(data) {
   console.log(data);
-  data.error = data.statusText;
+  data.responseError = data.statusText;
   renderResponse(data);
 }
 
 var loadResource = function(resourceName) {
   if (currentResource == resourceName) return;
-  $('#content').load(resourceName + '.html', function() {
+  $('#content').load('/' + resourceName + '.html', function() {
     loadScript(resourceName);
   });
 }
 
 var loadScript = function(scriptName) {
-  $.getScript('js/' + scriptName + '.js').done(function() {
+  $.getScript('/js/' + scriptName + '.js').done(function() {
     currentResource = scriptName;
     console.log(scriptName);
   });
 }
 
 var currentResource;
+var tuxknifeWebService;
 
 $('document').ready(function() {
   loadResource('login');

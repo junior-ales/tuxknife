@@ -1,20 +1,33 @@
 package br.com.tuxknife;
 
+import com.google.gson.JsonObject;
+
 public class CommandResponse {
     private String resource;
-    private String error;
+    private String responseError;
+    private String responseData;
+    private JsonObject json;
 
-    public CommandResponse(String resource, String error) {
+    public CommandResponse() {
+        json = new JsonObject();
+    }
+
+    public CommandResponse withError(String responseError) {
+        this.responseError = responseError;
+        return this;
+    }
+
+    public CommandResponse withResource(String resource) {
         this.resource = resource;
-        this.error = error;
+        return this;
     }
 
-    public String getResource() {
-        return resource;
+    public void addResponseData(String key, String value) {
+        json.addProperty(key, value);
+        responseData = json.toString();
     }
 
-    public String getError() {
-        return error;
+    public void setResource(String resource) {
+        this.resource = resource;
     }
-
 }

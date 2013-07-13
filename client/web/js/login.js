@@ -5,6 +5,7 @@ $('document').ready(function() {
     var pass = $('#password').val();
     var server = $('#server').val() ? $('#server').val() : 'localhost';
     var webservice = $('#webservice').val() ? $('#webservice').val() : 'localhost';
+    tuxknifeWebService = webservice;
 
     $.ajax({
       type: "POST",
