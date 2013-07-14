@@ -37,6 +37,12 @@ var loadScript = function(scriptName) {
 var currentResource;
 var tuxknifeWebService;
 
-$('document').ready(function() {
+$(document).ready(function() {
   loadResource('login');
+
+  $('#signOutButton').on('click', function() {
+    $.get('http://' + tuxknifeWebService + ':8080/api/signout').done(function(data) {
+      renderResponse(data);
+    });
+  });
 });

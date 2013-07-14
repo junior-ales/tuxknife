@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if IE 8]><html class='no-js lt-ie9' lang='en' > <![endif]-->
 <!--[if gt IE 8]><!--> 
-<html class="no-js" lang="en" > 
+<html class='no-js' lang='en' > 
 <!--<![endif]-->
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width' />
     <title>TuxKnife</title>
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/foundation.css" />
-    <script src="scripts/vendor/custom.modernizr.js"></script>
+    <link rel='stylesheet' href='css/normalize.css' />
+    <link rel='stylesheet' href='css/foundation.css' />
+    <script src='scripts/vendor/custom.modernizr.js'></script>
   </head>
   <body>
-    <header class="row">
-      <div class="large-12 columns">
+    <header class='row'>
+      <div class='large-10 small-9 columns'>
         <h1>TuxKnife</h1>
+      </div>
+      <div id='signOutContainer' class='large-2 small-3 columns'>
+        <form>
+          <input type='button' id='signOutButton' class='button small' value='LogOut' />
+        </form>
       </div>
     </header>
     <div id='errorMsg' class='panel error'>
       <label></label>
     </div>
-    <section id="content" class="row">
+    <section id='content' class='row'>
     </section>
-    <script src="scripts/vendor/jquery.js"></script>
-    <script src="scripts/foundation.min.js"></script>
-    <script src="scripts/pure.js"></script>
-    <script src="scripts/commandpage.js"></script>
-    <script src="scripts/login.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src='scripts/vendor/jquery.js'></script>
+    <script src='scripts/foundation.min.js'></script>
+    <script src='scripts/pure.js'></script>
+    <script src='scripts/app.js'></script>
     <script>
       $(document).foundation();
     </script>

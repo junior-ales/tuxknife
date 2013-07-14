@@ -1,7 +1,10 @@
-$('document').ready(function() {
-  $('#signOutButton').on('click', function() {
-    $.get('http://' + tuxknifeWebService + ':8080/api/signout').done(function(data) {
-      renderResponse(data);
-    });
-  });
-})
+$(document).ready(function() {
+var renderView = function(dataToRender) {
+  console.log('dataToRender stringified: ' + JSON.stringify(dataToRender));
+  console.log('dataToRender: ' + dataToRender);
+  var data = $.parseJSON(dataToRender.responseData);
+  console.log('responseData: ' + JSON.stringify(data));
+  var directive = { 'h3':'hostname' };
+  $('header.commandPageHeader').render(data, directive);
+};
+});
