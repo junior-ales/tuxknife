@@ -23,13 +23,15 @@ var POSTFailure = function(data) {
 var loadResource = function(resourceName) {
   if (currentResource == resourceName) return;
   $('#content').load('/' + resourceName + '.html', function() {
-    loadScript(resourceName);
+    console.log(resourceName);
   });
 }
 
 var loadScript = function(scriptName) {
+  //if (scriptsLoaded.indexOf(scriptName) >= 0) return;
   $.getScript('/js/' + scriptName + '.js').done(function() {
     currentResource = scriptName;
+    scriptsLoaded.push(scriptName);
     console.log(scriptName);
   });
 }
@@ -40,3 +42,4 @@ var tuxknifeWebService;
 $('document').ready(function() {
   loadResource('login');
 });
+

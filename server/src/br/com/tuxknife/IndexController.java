@@ -36,6 +36,8 @@ public class IndexController {
     @Get
 	@Path("/")
 	public void index() {
+        if (!loggedUser.isLoggedOut()) result.forwardTo(this).commandPage();
+
         CommandResponse response = new CommandResponse().withResource("login");
         result.use(json()).withoutRoot().from(response).serialize();
 	}
