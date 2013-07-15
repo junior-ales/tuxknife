@@ -6,7 +6,7 @@ var renderError = function(data) {
 
 var renderRouting = function(data) {
   data.resource = data.resource ? data.resource : 'login';
-  loadResource(data.resource);
+  loadResource(data);
 }
 
 var renderResponse = function(data) {
@@ -20,17 +20,18 @@ var POSTFailure = function(data) {
   renderResponse(data);
 }
 
-var loadResource = function(resourceName) {
-  if (currentResource == resourceName) return;
-  $('#content').load('/' + resourceName + '.html', function() {
-    loadScript(resourceName);
+var loadResource = function(data) {
+  if (currentResource == data.resource) return;
+  $('#content').load('/' + data.resource + '.html', function() {
+    loadScript(data);
   });
 }
 
-var loadScript = function(scriptName) {
-  $.getScript('/scripts/' + scriptName + '.js').done(function() {
-    currentResource = scriptName;
-    console.log(scriptName);
+var loadScript = function(data) {
+  $.getScript('/scripts/' + data.resource + '.js').done(function() {
+    currentResource = data.resource;
+    console.log(data);
+    renderView(data);
   });
 }
 
@@ -38,7 +39,8 @@ var currentResource;
 var tuxknifeWebService;
 
 $(document).ready(function() {
-  loadResource('login');
+  data = { "resource": "login"};
+  loadResource(data);
 
   $('#signOutButton').on('click', function() {
     $.get('http://' + tuxknifeWebService + ':8080/api/signout').done(function(data) {

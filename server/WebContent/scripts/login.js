@@ -1,3 +1,7 @@
+var renderView = function(dataToRender) {
+  console.log('renderView from login.js');
+};
+
 $(document).ready(function() {
   $('#errorMsg').hide();
   $('#submitButton').on('click', function() {
@@ -14,9 +18,7 @@ $(document).ready(function() {
       success: function(data) { renderResponse(data) },
       error: function(data) { POSTFailure(data) },
       dataType: "json"
-    }).done(function(data) {
-        renderView(data);
-      });
+    //}).done(function(data) { renderView(data) });
+    });
   });
-
 });

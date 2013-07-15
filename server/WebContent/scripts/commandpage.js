@@ -1,4 +1,3 @@
-$(document).ready(function() {
 var renderView = function(dataToRender) {
   console.log('dataToRender stringified: ' + JSON.stringify(dataToRender));
   console.log('dataToRender: ' + dataToRender);
@@ -7,4 +6,3 @@ var renderView = function(dataToRender) {
   var directive = { 'h3':'hostname' };
   $('header.commandPageHeader').render(data, directive);
 };
-});
