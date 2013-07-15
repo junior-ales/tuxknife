@@ -15,7 +15,7 @@ var renderResponse = function(data) {
   renderRouting(data);
 }
 
-var POSTFailure = function(data) {
+var requestFailure = function(data) {
   console.log(data);
   data.responseError = data.statusText;
   renderResponse(data);

@@ -20,8 +20,9 @@ $(document).ready(function() {
       url: 'http://' + webservice + ':8080/api/servers/' + server,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
-      error: function(data) { POSTFailure(data) },
-      dataType: "json"
+      error: function(data) { requestFailure(data) },
+      dataType: "json",
+      timeout: 5000
     });
   });
 });
