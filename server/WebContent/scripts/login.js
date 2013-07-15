@@ -1,6 +1,4 @@
-var renderView = function(dataToRender) {
-  console.log('renderView from login.js');
-};
+var renderView = function(dataToRender) {};
 
 $(document).ready(function() {
   $('#errorMsg').hide();
@@ -18,7 +16,6 @@ $(document).ready(function() {
       success: function(data) { renderResponse(data) },
       error: function(data) { POSTFailure(data) },
       dataType: "json"
-    //}).done(function(data) { renderView(data) });
     });
   });
 });
