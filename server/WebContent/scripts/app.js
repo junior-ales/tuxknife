@@ -1,5 +1,6 @@
 var renderError = function(data) {
-  data.visibility = data.responseError ? 'display:block' : 'display:none'; 
+  if (!data.responseError) return;
+  data.visibility = 'display:block';
   var directive = { '.@style':'visibility', 'label':'responseError' }
   $('#errorMsg').render(data, directive);
 }

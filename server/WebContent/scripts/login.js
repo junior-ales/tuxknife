@@ -1,8 +1,8 @@
 var renderView = function(dataToRender) {};
 
 $(document).ready(function() {
-  $('#errorMsg').hide();
   $('#submitButton').on('click', function() {
+    $('#errorMsg').hide();
     var user = $('#username').val();
     var pass = $('#password').val();
     var server = $('#server').val() ? $('#server').val() : 'localhost';
