@@ -6,7 +6,7 @@ public class CommandResponse {
     private String resource;
     private String responseError;
     private String responseData;
-    private JsonObject json;
+    private transient JsonObject json;
 
     public CommandResponse() {
         json = new JsonObject();
