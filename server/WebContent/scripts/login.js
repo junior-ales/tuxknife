@@ -6,6 +6,15 @@ var renderView = function(dataToRender) {
   $('#errorMsg').render(data, directive);
 };
 
+var normalizeServerURL = function(serverURL) {
+  return serverURL.replace(/\./g, dotEncoderCode);
+};
+
+// this same code will be decoded server side,
+// if your server url have a actual '__dot__' in the name
+// I have bad news for you =(
+var dotEncoderCode = '__dot__';
+
 $(document).ready(function() {
   $('#submitButton').on('click', function() {
     $('#errorMsg').hide();
@@ -18,12 +27,12 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: 'http://' + webservice + '/api/servers/' + server + '/' + port,
+      url: 'http://' + webservice + '/api/servers/' + normalizeServerURL(server) + '/' + port,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },
       dataType: "json",
-      timeout: 5000
+      timeout: 8000
     });
   });
 });

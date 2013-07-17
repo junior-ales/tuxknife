@@ -39,8 +39,9 @@ public class IndexController {
     public void signin(String username, String password, String server, String port) throws IOException {
         if (!loggedUser.isLoggedOut()) result.forwardTo(this).commandPage();
 
+
         try {
-            loggedUser.setSshSession(SSH.getSession(username, password, server, port));
+            loggedUser.setSshSession(SSH.getSession(username, password, normalizeServerURL(server), port));
             result.forwardTo(this).commandPage();
         } catch (JSchException e) {
             String error = "Error: " + e.getMessage();
@@ -73,6 +74,11 @@ public class IndexController {
         CommandResponse response = new CommandResponse().withResource("login");
         response.addResponseData("userMessage", "Signed out successfully");
         result.use(json()).withoutRoot().from(response).include("responseData").serialize();
+    }
+
+    private String normalizeServerURL(String serverURL) {
+        String dotEncoderCode = "__dot__";
+        return serverURL.replaceAll(dotEncoderCode, ".");
     }
 }
 
