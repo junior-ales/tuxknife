@@ -21,13 +21,12 @@ $(document).ready(function() {
     var user = $('#username').val();
     var pass = $('#password').val();
     var port = $('#port').val() ? $('#port').val() : '22';
-    var server = $('#server').val() ? $('#server').val() : 'localhost';
-    var webservice = $('#webservice').val() ? $('#webservice').val() : 'localhost';
-    tuxknifeWebService = webservice;
+    var serverToMonitor = $('#server').val() ? $('#server').val() : 'localhost';
+    tuxknifeWebService = window.location.host;
 
     $.ajax({
       type: "POST",
-      url: 'http://' + webservice + '/api/servers/' + normalizeServerURL(server) + '/' + port,
+      url: 'http://' + tuxknifeWebService + '/api/servers/' + normalizeServerURL(serverToMonitor) + '/' + port,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },

@@ -31,7 +31,6 @@ var loadResource = function(data) {
 var loadScript = function(data) {
   $.getScript('/scripts/' + data.resource + '.js').done(function() {
     currentResource = data.resource;
-    console.log(data);
     renderView(data);
   });
 }
