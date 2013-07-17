@@ -35,12 +35,12 @@ public class IndexController {
 	}
 
     @Post
-    @Path("/servers/{server}")
-    public void signin(String username, String password, String server) throws IOException {
+    @Path("/servers/{server}/{port}")
+    public void signin(String username, String password, String server, String port) throws IOException {
         if (!loggedUser.isLoggedOut()) result.forwardTo(this).commandPage();
 
         try {
-            loggedUser.setSshSession(SSH.getSession(username, password, server));
+            loggedUser.setSshSession(SSH.getSession(username, password, server, port));
             result.forwardTo(this).commandPage();
         } catch (JSchException e) {
             String error = "Error: " + e.getMessage();

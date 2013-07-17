@@ -14,8 +14,8 @@ public class SSH {
     private static final int TIMEOUT_IN_MILLISECONDS = 5000;
     private static final JSch JSCH = new JSch();
 
-    public static Session getSession(String username, String password, String server) throws JSchException {
-        Session session = JSCH.getSession(username, server);
+    public static Session getSession(String username, String password, String server, String port) throws JSchException {
+        Session session = JSCH.getSession(username, server, Integer.valueOf(port));
         session.setPassword(password);
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect(TIMEOUT_IN_MILLISECONDS);

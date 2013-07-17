@@ -74,7 +74,7 @@ public class IndexControllerTest {
             }
         }).when(loggedUser).setSshSession(sshSession);
 
-        mockedController.signin("username", "password", "server");
+        mockedController.signin("username", "password", "server", "port");
 
         CommandResponse cResponse = new CommandResponse().withError("");
         String expectedResult = Should.getJsonOf(cResponse, withoutJsonRootElement);

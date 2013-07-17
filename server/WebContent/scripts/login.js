@@ -11,13 +11,14 @@ $(document).ready(function() {
     $('#errorMsg').hide();
     var user = $('#username').val();
     var pass = $('#password').val();
+    var port = $('#port').val() ? $('#port').val() : '22';
     var server = $('#server').val() ? $('#server').val() : 'localhost';
     var webservice = $('#webservice').val() ? $('#webservice').val() : 'localhost';
     tuxknifeWebService = webservice;
 
     $.ajax({
       type: "POST",
-      url: 'http://' + webservice + ':8080/api/servers/' + server,
+      url: 'http://' + webservice + '/api/servers/' + server + '/' + port,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },

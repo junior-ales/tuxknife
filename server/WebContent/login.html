@@ -1,4 +1,4 @@
-<div class="large-6 columns">
+<div class='large-6 columns'>
   <form>
     <label for='username'>Username</label>
     <input type='text' id='username' name='username' autofocus />
@@ -6,12 +6,20 @@
     <label for='password'>Password</label>
     <input type='password' id='password' name='password' />
 
-    <label for='server'>Server</label>
-    <input type='text' id='server' name='server' />
+    <div class='row collapse'>
+      <div class='large-9 small-9 columns'>
+        <label for='server'>SSH Server</label>
+        <input type='text' id='server' name='server' />
+      </div>
+      <div class='large-3 small-3 columns'>
+        <label for='port'>Port</label>
+        <input type='number' min='1' id='port' name='port' placeholder='22' />
+      </div>
+    </div>
 
     <label for='webservice'>Webservice</label>
     <input type='text' id='webservice' name='webservice' />
 
-    <input type='button' id='submitButton' class="button small-12" value="Submit" />
+    <input type='button' id='submitButton' class='button small-12' value='Submit' />
   </form>
 </div>
