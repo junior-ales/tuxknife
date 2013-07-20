@@ -1,5 +1,0 @@
-Server JSON response structure = {
-  "resource": "Resource is the the name of the page/script the client will render",
-  "responseError": "Error on server actions",
-  "responseData": "Results of ssh commands to be rendered in the view"
-}
