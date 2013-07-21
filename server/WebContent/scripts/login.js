@@ -16,6 +16,10 @@ var normalizeServerURL = function(serverURL) {
 var dotEncoderCode = '__dot__';
 
 $(document).ready(function() {
+  $(document).keypress(function(event) {
+    if (event.which == '13') $('#submitButton').click();
+  });
+
   $('#submitButton').on('click', function() {
     $('#errorMsg').hide();
     var user = $('#username').val();
@@ -24,12 +28,14 @@ $(document).ready(function() {
     var serverToMonitor = $('#server').val() ? $('#server').val() : 'localhost';
     tuxknifeWebService = window.location.host;
 
+    preAjaxCall();
     $.ajax({
       type: "POST",
       url: 'http://' + tuxknifeWebService + '/api/servers/' + normalizeServerURL(serverToMonitor) + '/' + port,
       data: { "username": user, "password": pass },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },
+      complete: function(data) { afterAjaxCall() },
       dataType: "json",
       timeout: 8000
     });
