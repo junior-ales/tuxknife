@@ -4,8 +4,10 @@ var renderView = function(dataToRender) {
   $('body').render(data, directive);
 
   $('#signOutButton').on('click', function() {
+    preAjaxCall();
     $.get('http://' + tuxknifeWebService + '/api/signout').done(function(data) {
       renderResponse(data);
+      afterAjaxCall();
     });
   });
 };
