@@ -2,7 +2,7 @@ var renderView = function(dataToRender) {
   if (!dataToRender.responseData) return;
   var data = $.parseJSON(dataToRender.responseData);
   data.visibility = 'display:block';
-  var directive = { '.@style':'visibility', 'label':'userMessage' }
+  var directive = { '.@style': 'visibility', 'label': 'userMessage' };
   $('#errorMsg').render(data, directive);
 };
 
