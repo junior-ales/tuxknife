@@ -3,6 +3,7 @@ package br.com.tuxknife;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -11,11 +12,11 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 public class SSH {
-    private static final int TIMEOUT_IN_MILLISECONDS = 5000;
-    private static final JSch JSCH = new JSch();
+    protected static final int TIMEOUT_IN_MILLISECONDS = 5000;
+    protected static JSch Jsch = new JSch();
 
     public static Session getSession(String username, String password, String server, String port) throws JSchException {
-        Session session = JSCH.getSession(username, server, Integer.valueOf(port));
+        Session session = Jsch.getSession(username, server, Integer.valueOf(port));
         session.setPassword(password);
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect(TIMEOUT_IN_MILLISECONDS);
@@ -23,7 +24,7 @@ public class SSH {
     }
 
     public static Channel getChannel(String command, Session session) throws JSchException {
-        Channel channel=  session.openChannel("exec");
+        Channel channel = session.openChannel("exec");
         ((ChannelExec)channel).setCommand(command);
         channel.setInputStream(null);
         ((ChannelExec)channel).setErrStream(System.err);
@@ -31,7 +32,7 @@ public class SSH {
         return channel;
     }
 
-    public static String executeCommand(Session session, String command) throws JSchException, IOException {
+    public static String executeCommand(String command, Session session) throws JSchException, IOException {
         Channel channel = SSH.getChannel(command, session);
 
         String tmp;
@@ -43,7 +44,10 @@ public class SSH {
                 buffer.append(tmp).append("\n");
             }
         }
-        System.out.println("exit-status: " + channel.getExitStatus());
+
+        String statusMessage = channel.getExitStatus() == 0 ? "successfully" : "with errors";
+        String message = MessageFormat.format("Command \"{0}\" ran {1}", command, statusMessage);
+        System.out.println(message);
         channel.disconnect();
 
         return normalizeReturn(buffer);

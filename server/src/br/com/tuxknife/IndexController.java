@@ -36,15 +36,15 @@ public class IndexController {
 
     @Post
     @Path("/servers/{server}/{port}")
-    public void signin(String username, String password, String server, String port) throws IOException {
+    public void signin(String username, String password, String server, String port) {
         if (!loggedUser.isLoggedOut()) result.forwardTo(this).commandPage();
-
 
         try {
             loggedUser.setSshSession(SSH.getSession(username, password, normalizeServerURL(server), port));
             result.forwardTo(this).commandPage();
-        } catch (JSchException e) {
-            String error = "Error: " + e.getMessage();
+        } catch (JSchException exception) {
+            String error = "Error opening the SSH session: " + exception.getMessage();
+            System.out.println(error);
             CommandResponse response = new CommandResponse().withError(error);
             result.use(json()).withoutRoot().from(response).serialize();
         }
@@ -57,11 +57,12 @@ public class IndexController {
 
         CommandResponse response = new CommandResponse();
         try {
-            response.addResponseData("hostname", SSH.executeCommand(loggedUser.getSshSession(), "hostname"));
+            response.addResponseData("hostname", SSH.executeCommand("hostname", loggedUser.getSshSession()));
             response.setResource("commandpage");
             result.use(json()).withoutRoot().from(response).include("responseData").serialize();
-        } catch (JSchException | IOException e) {
-            String error = "Error: " + e.getMessage();
+        } catch (JSchException | IOException exception) {
+            String error = "Error executing a command: " + exception.getMessage();
+            System.out.println(error);
             response = new CommandResponse().withError(error);
             result.use(json()).withoutRoot().from(response).serialize();
         }
