@@ -37,12 +37,12 @@ var loadScript = function (data) {
 
 var preAjaxCall = function() {
     $('#loadingImg').show();
-    $('input[type="button"]').addClass('disabled');
+    $('button').addClass('disabled');
 };
 
 var afterAjaxCall = function() {
     $('#loadingImg').hide();
-    $('input[type="button"]').removeClass('disabled');
+    $('button').removeClass('disabled');
 };
 
 var currentResource;

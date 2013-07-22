@@ -16,23 +16,18 @@ var normalizeServerURL = function(serverURL) {
 var dotEncoderCode = '__dot__';
 
 $(document).ready(function() {
-  $(document).keypress(function(event) {
-    if (event.which == '13') $('#submitButton').click();
-  });
-
-  $('#submitButton').on('click', function() {
+  $('#login-form').submit(function(event) {
+    event.preventDefault();
     $('#errorMsg').hide();
-    var user = $('#username').val();
-    var pass = $('#password').val();
-    var port = $('#port').val() ? $('#port').val() : '22';
-    var serverToMonitor = $('#server').val() ? $('#server').val() : 'localhost';
+    var port = $('#port').val() || '22';
+    var serverToMonitor = $('#server').val() || 'localhost';
     tuxknifeWebService = window.location.host;
 
-    preAjaxCall();
     $.ajax({
       type: "POST",
-      url: 'http://' + tuxknifeWebService + '/api/servers/' + normalizeServerURL(serverToMonitor) + '/' + port,
-      data: { "username": user, "password": pass },
+      url: 'http://'+tuxknifeWebService+'/api/servers/'+normalizeServerURL(serverToMonitor)+'/'+port,
+      data: { "username": $('#username').val(), "password": $('#password').val() },
+      beforeSend: function() { preAjaxCall() },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },
       complete: function(data) { afterAjaxCall() },

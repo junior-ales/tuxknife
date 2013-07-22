@@ -1,7 +1,7 @@
 <div class='large-6 columns'>
-  <form>
+  <form id='login-form'>
     <label for='username'>Username</label>
-    <input type='text' id='username' name='username' autofocus />
+    <input type='text' id='username' name='username' autofocus required />
 
     <label for='password'>Password</label>
     <input type='password' id='password' name='password' />
@@ -13,10 +13,10 @@
       </div>
       <div class='large-3 small-3 columns'>
         <label for='port'>Port</label>
-        <input type='number' min='1' id='port' name='port' placeholder='22' />
+        <input type='number' min='1' max='65535' id='port' name='port' placeholder='22' />
       </div>
     </div>
 
-    <input type='button' id='submitButton' class='button small-12' value='Connect' />
+    <button type='submit' class='button small-12'>Connect</button>
   </form>
 </div>
