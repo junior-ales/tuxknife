@@ -46,7 +46,6 @@ var afterAjaxCall = function() {
 };
 
 var currentResource;
-var tuxknifeWebService;
 
 $(document).ready(function() {
   loadResource({ "resource": "login" });

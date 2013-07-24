@@ -16,22 +16,22 @@ var normalizeServerURL = function(serverURL) {
 var dotEncoderCode = '__dot__';
 
 $(document).ready(function() {
-  $('#login-form').submit(function(event) {
+  $('#login-form').on('submit', function(event) {
     event.preventDefault();
     $('#errorMsg').hide();
+
     var port = $('#port').val() || '22';
     var serverToMonitor = $('#server').val() || 'localhost';
-    tuxknifeWebService = window.location.host;
 
-    $.ajax({
-      type: "POST",
-      url: 'http://'+tuxknifeWebService+'/api/servers/'+normalizeServerURL(serverToMonitor)+'/'+port,
+    $.ajax('http://'+window.location.host + '/api/servers/' +
+           normalizeServerURL(serverToMonitor) + '/'+port , {
+      type: 'POST',
       data: { "username": $('#username').val(), "password": $('#password').val() },
       beforeSend: function() { preAjaxCall() },
       success: function(data) { renderResponse(data) },
       error: function(data) { requestFailure(data) },
       complete: function(data) { afterAjaxCall() },
-      dataType: "json",
+      dataType: 'json',
       timeout: 8000
     });
   });

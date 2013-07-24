@@ -4,7 +4,7 @@ var renderView = function(dataToRender) {
   $('body').render(data, directive);
 
   $('#signOutButton').on('click', function() {
-    $.ajax('http://' + tuxknifeWebService + '/api/signout', { 
+    $.ajax('http://' + window.location.host + '/api/signout', { 
       success: function(data) { renderResponse(data) },
       beforeSend: function() { preAjaxCall() },
       complete: function() { afterAjaxCall() }
