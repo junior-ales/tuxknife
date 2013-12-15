@@ -18,5 +18,8 @@
   "dependencies": {
     "angular": "~1.2.5",
     "foundation": "~5.0.2"
+  },
+  "resolutions": {
+    "angular": "~1.2.5"
   }
 }

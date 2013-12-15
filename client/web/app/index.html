@@ -4,13 +4,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation 5</title>
+    <title>Tuxknife - Monitoring and Managing easily</title>
     <link rel="stylesheet" href="foundation/css/normalize.css">
     <link rel="stylesheet" href="foundation/css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="public/css/app.css">
     <script src="foundation/js/vendor/custom.modernizr.js"></script>
   </head>
-  <body>
+  <body ng-app="tuxknifeApp">
     <section class="row">
       <header class="small-12 columns">
         <h1>Tuxknife</h1>
@@ -18,13 +18,14 @@
     </section>
 
     <section class="row">
-      <section class="small-12 columns">
-      </section>
+      <section ng-view class="small-12 columns"></section>
     </section>
 
-    <script src="angular/angular.min.js"></script>
+    <script src="angular/angular.js"></script>
+    <script src="angular-route/angular-route.js"></script>
     <script src="foundation/js/vendor/jquery.js"></script>
     <script src="foundation/js/foundation.min.js"></script>
+    <script src="public/js/app.js"></script>
     <script>
       $(document).foundation();
     </script>
