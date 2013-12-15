@@ -1,0 +1,9 @@
+{
+  "name": "tuxknife-web-client",
+  "description": "Web Client to manage your Unix based server",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.4.7"
+  }
+}
