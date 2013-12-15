@@ -1,9 +1,26 @@
 {
   "name": "tuxknife-web-client",
+  "version": "0.0.0",
   "description": "Web Client to manage your Unix based server",
-  "version": "0.0.1",
-  "private": true,
+  "main": "server.js",
   "dependencies": {
-    "express": "3.4.7"
-  }
+    "bower": "~1.2.8",
+    "express": "~3.4.7",
+    "ejs": "~0.8.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/junior-ales/tuxknife.git"
+  },
+  "author": "Junior Ales <http://about.me/juniorales>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/junior-ales/tuxknife/issues"
+  },
+  "homepage": "https://github.com/junior-ales/tuxknife"
 }

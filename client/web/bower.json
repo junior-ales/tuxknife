@@ -1,0 +1,22 @@
+{
+  "name": "tuxknife-web-client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/junior-ales/tuxknife",
+  "authors": [
+    "Junior Ales <edilson.ales.jr@gmail.com>"
+  ],
+  "description": "Web Client to manage your Unix based server",
+  "main": "app/css/app.css",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.5",
+    "foundation": "~5.0.2"
+  }
+}
